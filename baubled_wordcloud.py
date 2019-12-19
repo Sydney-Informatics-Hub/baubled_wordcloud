@@ -119,7 +119,10 @@ def place_baubles(
                 # okay if not overlapping
                 break
         else:
-            raise RuntimeError("Could not place all baubles")
+            raise RuntimeError(
+                "Could not place all baubles. "
+                "Use fewer or smaller baubles, or try a different random seed."
+            )
         locations.append((y, x, r))
         mask_image_arr[circle_mask] = 255
 
