@@ -8,9 +8,11 @@ Requirements:
 * https://pypi.org/project/wordcloud/
 
 
-With `pipenv` installed, you can do:
+With `pipenv` installed, you don't need to worry about other requirements, and
+can just do:
 
 ```sh
 pipenv run python baubled_wordcloud.py faces/*.jpg
 ```
-and the generated output will be in `out.png`.
+given a directory of images at `faces/`, and the generated output will be in
+`out.png`.
