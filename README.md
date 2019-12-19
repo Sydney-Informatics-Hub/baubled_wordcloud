@@ -1,6 +1,6 @@
 # Generate a baubled word cloud
 
-This script creates an image to a mask (a xmas tree) with a word clound and images of faces as baubles on the tree.
+This script fills a specified mask image (a xmas tree by default) with a word cloud, and images of faces as baubles on the tree.
 
 Requirements:
 
@@ -8,7 +8,7 @@ Requirements:
 * https://pypi.org/project/wordcloud/
 
 
-With `pipenv` installed, you don't need to worry about other requirements, and
+With [`pipenv`](https://pipenv.kennethreitz.org/en/latest/) installed, you don't need to worry about other requirements, and
 can just do:
 
 ```sh
