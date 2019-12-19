@@ -1,0 +1,75 @@
+RDM
+eNotebook
+collaboration
+consult
+grant support
+governance
+REDCap
+survey
+database
+linked data
+data
+science
+machine learning
+AI
+regression
+ANOVA
+time series
+spectral
+bayesian
+probability
+classification
+bioinformatics
+workflow
+containerise
+singularity
+HPC
+pipeline
+ETL
+consolidation
+scaling up
+NCI
+Artemis
+web scraping
+collection
+analysis
+modelling
+simulation
+visualisation
+clustering
+open-source
+software
+reports
+power
+sample size
+experimental design
+evaluation
+model selection
+inference
+survival
+prediction
+sensor
+dashboard
+transformation
+NLP
+text
+cluster
+distributed
+covariance
+spatial
+bias
+estimation
+test
+hypothesis
+Python
+R
+annotation
+genomics
+web app
+reinforcement
+MCMC
+API
+statistics
+language
+images
+significance
