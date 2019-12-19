@@ -306,14 +306,23 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("bauble_paths", nargs="+")
     parser.add_argument(
-        "-m", "--mask-image", default="xmas-tree.png", help="path to mask image"
+        "-m",
+        "--mask-image",
+        default="xmas-tree.png",
+        help="path to mask image. 'xmas-tree.png' by default.",
     )
     parser.add_argument(
-        "-w", "--word-list", default="words-for-cloud.txt", help="path to word list"
+        "-w",
+        "--word-list",
+        default="words-for-cloud.txt",
+        help="path to word list. 'words-for-cloud.png' by default.",
     )
     parser.add_argument("-s", "--seed", default=0, type=int, help="random seed")
     parser.add_argument(
-        "-o", "--out-path", default="out.png", help="output image path, default out.png"
+        "-o",
+        "--out-path",
+        default="out.png",
+        help="output image path, 'out.png' by default.",
     )
     args = parser.parse_args()
 
