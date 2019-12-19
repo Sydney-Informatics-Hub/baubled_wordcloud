@@ -8,7 +8,7 @@ Requirements:
 * https://pypi.org/project/wordcloud/
 
 
-With `pipenv` installed, you don't need to worry about other requirements, and
+With [`pipenv`](https://pipenv.kennethreitz.org/en/latest/) installed, you don't need to worry about other requirements, and
 can just do:
 
 ```sh
