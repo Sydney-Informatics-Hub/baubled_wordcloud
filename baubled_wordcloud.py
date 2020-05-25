@@ -326,7 +326,7 @@ if __name__ == "__main__":
         "-w",
         "--word-list",
         default="words-for-cloud.txt",
-        help="path to word list. 'words-for-cloud.png' by default.",
+        help="path to word list. 'words-for-cloud.txt' by default.",
     )
     parser.add_argument("-s", "--seed", default=0, type=int, help="random seed")
     parser.add_argument(
