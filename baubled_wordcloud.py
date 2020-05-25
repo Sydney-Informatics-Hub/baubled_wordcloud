@@ -100,14 +100,14 @@ def place_baubles(
 
     for i in tqdm(range(n), desc='Placing baubles'):
         bool_mask = ~get_white_mask(mask_image_arr)
-        blur = int(min_radius * (2 ** .5))
+        # can't place a circle within radius of a masked spot
+        blur = int((min_radius + margin) * (2 ** .5)) + margin
         blur_mask = bool_mask.copy()
         blur_mask[blur:] &= bool_mask[:-blur]
         blur_mask[:-blur] &= bool_mask[blur:]
         blur_mask[:, blur:] &= bool_mask[:, :-blur]
         blur_mask[:, :-blur] &= bool_mask[:, blur:]
         Y, X = blur_mask.nonzero()
-        print(blur_mask.sum(), bool_mask.sum())
 
         ys = np.arange(len(Y))
         rng.shuffle(ys)
