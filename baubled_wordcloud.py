@@ -26,7 +26,7 @@ See generate_word_cloud_with_baubles below.
 from PIL import Image, ImageDraw
 import numpy as np
 import wordcloud
-import glob
+from matplotlib import colors
 import random
 
 
@@ -155,12 +155,12 @@ def calc_weights_from_lengths(words, length_exponent=0.8, seed=0):
     )
 
 
-def clear_unmasked(image, mask_image):
+def clear_unmasked(image, mask_image, bg_color="white"):
     """Whiten the outside of the mask in image
     """
     inverted_mask = get_white_mask(mask_image)
     arr = np.asarray(image).copy()
-    arr[inverted_mask] = 255
+    arr[inverted_mask] = list(np.asarray(colors.to_rgb(bg_color)) * 255)
     return Image.fromarray(arr)
 
 
@@ -228,6 +228,7 @@ def generate_word_cloud_with_baubles(
     bauble_min_sep=3,
     cloud_bg_color="green",
     cloud_fg_colormap="Pastel1",
+    image_bg_color="white",
     bauble_outline=False,
     seed=0,
 ):
@@ -255,6 +256,8 @@ def generate_word_cloud_with_baubles(
         where the initial fill_image mask is.
     cloud_fg_colormap : str or colormap
         Matplotlib colormap for colouring words.
+    image_bg_color : str
+        Colour for the background of the image.
     bauble_outline : str or False
         Colour to outline baubles
     seed : int
@@ -285,15 +288,20 @@ def generate_word_cloud_with_baubles(
         seed=_gen_seed(),
     )
 
+    if "," in cloud_fg_colormap:
+        cloud_fg_colormap = colors.LinearSegmentedColormap.from_list(
+            "my_list", [colors.to_rgba(s) for s in cloud_fg_colormap.split(",")], N=10
+        )
+
     cloud = wordcloud.WordCloud(
-        background_color="green",
+        background_color=cloud_bg_color,
         repeat=True,
         mask=mask_image_arr,
-        colormap="Pastel1",
+        colormap=cloud_fg_colormap,
         random_state=_gen_seed(),
     )
     cloud.generate_from_frequencies(word_freqs)
-    out = clear_unmasked(cloud.to_image(), mask_image)
+    out = clear_unmasked(cloud.to_image(), mask_image, bg_color=image_bg_color)
 
     bauble_pic_paths = bauble_pic_paths[:]  # copy
     random.Random(_gen_seed()).shuffle(bauble_pic_paths)
@@ -327,6 +335,28 @@ if __name__ == "__main__":
         default="out.png",
         help="output image path, 'out.png' by default.",
     )
+    parser.add_argument(
+        "--bg-color", default="green", help="Color for cloud background",
+    )
+    parser.add_argument(
+        "--image-bg-color", default="white", help="Color for image background",
+    )
+    parser.add_argument(
+        "--word-colormap",
+        default="Pastel1",
+        help=(
+            "Colormap for cloud words."
+            " Specify gradients by a list of ,-separated color names."
+        ),
+    )
+    parser.add_argument(
+        "--min-bauble-radius",
+        type=float,
+        help=(
+            "Minimum radius of a bauble."
+            " <1 indicates a fraction of the width of the whole image."
+        ),
+    )
     args = parser.parse_args()
 
     words = [word.strip() for word in open(args.word_list)]
@@ -336,6 +366,10 @@ if __name__ == "__main__":
         word_freqs=calc_weights_from_lengths(
             words, length_exponent=0.1, seed=args.seed
         ),
+        cloud_bg_color=args.bg_color,
+        image_bg_color=args.image_bg_color,
+        cloud_fg_colormap=args.word_colormap,
         seed=args.seed,
+        min_bauble_radius=args.min_bauble_radius,
     )
     out.save(args.out_path)
