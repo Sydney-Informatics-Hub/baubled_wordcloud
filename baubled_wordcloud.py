@@ -27,6 +27,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import wordcloud
 from matplotlib import colors
+from tqdm import tqdm
 import random
 
 
@@ -97,14 +98,22 @@ def place_baubles(
     locations = []
     rng = np.random.RandomState(seed)
 
-    for i in range(n):
+    for i in tqdm(range(n), desc='Placing baubles'):
         bool_mask = ~get_white_mask(mask_image_arr)
-        Y, X = bool_mask.nonzero()
+        blur = int(min_radius * (2 ** .5))
+        blur_mask = bool_mask.copy()
+        blur_mask[blur:] &= bool_mask[:-blur]
+        blur_mask[:-blur] &= bool_mask[blur:]
+        blur_mask[:, blur:] &= bool_mask[:, :-blur]
+        blur_mask[:, :-blur] &= bool_mask[:, blur:]
+        Y, X = blur_mask.nonzero()
+        print(blur_mask.sum(), bool_mask.sum())
 
-        for i in range(len(Y)):
-            n = rng.randint(0, len(Y) - 1)
-            y = Y[n]
-            x = X[n]
+        ys = np.arange(len(Y))
+        rng.shuffle(ys)
+        for i in ys:
+            y = Y[i]
+            x = X[i]
             r = rng.randint(min_radius, max_radius)
             if (
                 y + r > mask_image_arr.shape[0]
@@ -209,7 +218,7 @@ def paste_bauble_images(image, bauble_paths, locations, outline=None):
         Colour of circle outline
     """
     draw = ImageDraw.Draw(image)
-    for path, (y, x, r) in zip(bauble_paths, locations):
+    for path, (y, x, r) in tqdm(zip(bauble_paths, locations), desc="Pasting images"):
         bauble_image = Image.open(path)
         bauble_image = crop_image_to_circle(bauble_image)
         bauble_image = bauble_image.resize((r * 2, r * 2))

@@ -1,3 +1,4 @@
 Pillow>=7.*
 wordcloud
 matplotlib>=2.*
+tqdm
