@@ -111,9 +111,13 @@ def place_baubles(
 
         ys = np.arange(len(Y))
         rng.shuffle(ys)
-        for i in ys:
-            y = Y[i]
-            x = X[i]
+        for i, n in enumerate(ys):
+            if i == 1000:
+                print("Struggling to find placements for baubles. "
+                      "Consider using fewer or smaller baubles, or try a "
+                      "different random seed.")
+            y = Y[n]
+            x = X[n]
             r = rng.randint(min_radius, max_radius)
             if (
                 y + r > mask_image_arr.shape[0]
