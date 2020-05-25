@@ -18,4 +18,4 @@ given a directory of images at `faces/`, and the generated output will be in
 `out.png`.
 
 
-Contributors are welcome. See [Issues](https://github.sydney.edu.au/informatics/baubled_wordcloud/issues/).
+Contributors are welcome. See [Issues](https://github.com/Sydney-Informatics-Hub/baubled_wordcloud/issues/).
