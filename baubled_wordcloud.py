@@ -29,6 +29,7 @@ import wordcloud
 from matplotlib import colors
 from tqdm import tqdm
 import random
+import sys
 
 
 # XXX: With apologies, this overuses np.asarray(image).
@@ -115,7 +116,7 @@ def place_baubles(
             if i == 1000:
                 print("Struggling to find placements for baubles. "
                       "Consider using fewer or smaller baubles, or try a "
-                      "different random seed.")
+                      "different random seed.", file=sys.stderr)
             y = Y[n]
             x = X[n]
             r = rng.randint(min_radius, max_radius)
