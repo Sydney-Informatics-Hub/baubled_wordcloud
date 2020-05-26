@@ -19,3 +19,18 @@ given a directory of images at `faces/`, and the generated output will be in
 
 
 Contributors are welcome. See [Issues](https://github.com/Sydney-Informatics-Hub/baubled_wordcloud/issues/).
+
+## Developed by the Sydney Informatics Hub
+
+This tool was developed by the Sydney Informatics Hub, a core research facility of The University of Sydney.
+
+         /  /\        ___          /__/\
+        /  /:/_      /  /\         \  \:\
+       /  /:/ /\    /  /:/          \__\:\
+      /  /:/ /::\  /__/::\      ___ /  /::\
+     /__/:/ /:/\:\ \__\/\:\__  /__/\  /:/\:\
+    \  \:\/:/~/:/    \  \:\/\ \  \:\/:/__\/
+      \  \::/ /:/      \__\::/  \  \::/
+       \__\/ /:/       /__/:/    \  \:\
+         /__/:/ please \__\/      \  \:\
+         \__\/ acknowledge your use\__\/
