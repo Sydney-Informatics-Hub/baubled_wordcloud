@@ -245,6 +245,7 @@ def generate_word_cloud_with_baubles(
     image_bg_color="white",
     bauble_outline=False,
     seed=0,
+    n_attempts=5,
 ):
     """Fill a mask with a word cloud and baubles (circular pictures)
 
@@ -276,6 +277,8 @@ def generate_word_cloud_with_baubles(
         Colour to outline baubles
     seed : int
         Random seed
+    n_attempts : int, default=5
+        Attempt several random seeds when placement fails
 
     Returns
     -------
@@ -292,15 +295,24 @@ def generate_word_cloud_with_baubles(
         min_bauble_radius = int(np.ceil(mask_image.width * min_bauble_radius))
     max_bauble_radius = int(np.ceil(min_bauble_radius * max_bauble_radius_ratio))
 
-    bauble_centres_and_radii, mask_image_arr = place_baubles(
-        np.asarray(mask_image),
-        n=len(bauble_pic_paths),
-        min_radius=min_bauble_radius,
-        max_radius=max_bauble_radius,
-        margin=bauble_margin,
-        min_sep=bauble_min_sep,
-        seed=_gen_seed(),
-    )
+    for i in range(n_attempts):
+        try:
+            bauble_centres_and_radii, mask_image_arr = place_baubles(
+                np.asarray(mask_image),
+                n=len(bauble_pic_paths),
+                min_radius=min_bauble_radius,
+                max_radius=max_bauble_radius,
+                margin=bauble_margin,
+                min_sep=bauble_min_sep,
+                seed=_gen_seed(),
+            )
+        except RuntimeError:
+            if i == n_attempts - 1:
+                raise
+            print("Failed. Making another attempt", file=sys.stderr)
+        else:
+            break
+
 
     if "," in cloud_fg_colormap:
         cloud_fg_colormap = colors.LinearSegmentedColormap.from_list(

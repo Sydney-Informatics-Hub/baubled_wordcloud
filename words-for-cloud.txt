@@ -73,3 +73,6 @@ statistics
 language
 images
 significance
+sensitive data
+deep learning
+infrastructure
